@@ -7,9 +7,7 @@
     inherit (inputs.nixpkgs.lib) filter attrNames;
   in {
 
-    systemTweaks = import ./systemTweaks.nix;
-
-#    gnomeTweaks = import ./gnomeTweaks.nix;
+    tweaks = import ./tweaks.nix;
 
     default = throw ''
       The usage of default module is deprecated as multiple modules are provided by nix-gaming. Please use
