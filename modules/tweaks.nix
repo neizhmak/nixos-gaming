@@ -10,19 +10,7 @@
     '';
   };
 
-  config = lib.mkIf boot.silent.enable {
-    boot.plymouth.enable = true;
-    boot.consoleLogLevel = 3;
-    boot.initrd.verbose = false;
-  };
-
-  options = {
-    boot.silent.enable = lib.mkEnableOption ''
-      
-    '';
-  };
-
-  config = lib.mkIf boot.silent.enable {
+  config = lib.mkIf config.boot.silent.enable {
     boot.plymouth.enable = true;
     boot.consoleLogLevel = 3;
     boot.initrd.verbose = false;
@@ -32,15 +20,11 @@
     ];
   };
 
-  config = lib.mkIf zramSwap.enable {
+  config = lib.mkIf config.zramSwap.enable {
     zramSwap.algorithm = "lz4";
   };
 
-  config = lib.mkIf zramSwap.enable {
-    zramSwap.algorithm = "lz4";
-  };
-
-  config = lib.mkIf programs.gamescope.enable {
+  config = lib.mkIf config.programs.gamescope.enable {
     nixpkgs.config.packageOverrides = pkgs: {
       steam = pkgs.steam.override {
         extraPkgs = pkgs: with pkgs; [
@@ -59,19 +43,15 @@
     };
   };
 
-  config = lib.mkIf programs.steam.enable {
+  config = lib.mkIf config.programs.steam.enable {
     programs.steam.extraCompatPackages = with pkgs; [ proton-ge-bin ];
   };
 
-  config = lib.mkIf programs.gamemode.enable {
+  config = lib.mkIf config.programs.gamemode.enable {
       programs.gamemode.enableRenice = true;
   };
 
-  config = lib.mkIf zramSwap.enable {
-      zramSwap.algorithm = "lz4";
-  };
-
-  config = lib.mkIf services.ananicy.enable  {
+  config = lib.mkIf config.services.ananicy.enable  {
     services.ananicy.package = pkgs.ananicy-cpp;
     services.ananicy.rulesProvider = pkgs.ananicy-rules-cachyos;
   };
@@ -82,7 +62,7 @@
     '';
   };
 
-  config = lib.mkIf system.optimizations.enable {
+  config = lib.mkIf config.system.optimizations.enable {
     # last cheched with https://steamdeck-packages.steamos.cloud/archlinux-mirror/jupiter-main/os/x86_64/steamos-customizations-jupiter-20240219.1-2-any.pkg.tar.zst
     boot.kernel.sysctl = {
       # 20-shed.conf
